@@ -7,7 +7,7 @@ import './CollegeLogin.css';
 
 const CollegeLogin = () => {
   const navigate = useNavigate();
-  const { setCurrentUser, setUser } = useAppContext();
+  const { setCurrentUser, setUser, baseURL } = useAppContext();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -29,7 +29,7 @@ const CollegeLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/college/login`, 
+      const response = await axios.post(`${baseURL}api/college/login`, 
         {
           email: formData.email,
           password: formData.password 

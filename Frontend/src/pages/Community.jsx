@@ -6,7 +6,7 @@ import socket from '../socket';
 import './Community.css';
 
 const Community = () => {
-  const { currentUser } = useAppContext();
+  const { currentUser, baseURL } = useAppContext();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ const Community = () => {
   const fetchMessages = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/community/messages/${groupType}`, {
+      const response = await axios.get(`${baseURL}api/community/messages/${groupType}`, {
         withCredentials: true
       });
       setMessages(response.data.messages);
@@ -106,7 +106,7 @@ const Community = () => {
         formData.append('messageType', selectedFile.type.startsWith('image/') ? 'image' : 
                        selectedFile.type.startsWith('video/') ? 'video' : 'file');
 
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/community/upload-media`, 
+        const response = await axios.post(`${baseURL}api/community/upload-media`, 
           formData, {
             withCredentials: true,
             headers: { 'Content-Type': 'multipart/form-data' }
@@ -118,7 +118,7 @@ const Community = () => {
         }
       } else {
         // Send text message
-        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/community/messages`, {
+        const response = await axios.post(`${baseURL}api/community/messages`, {
           content: newMessage,
           groupType,
           replyTo: replyTo?._id
@@ -151,7 +151,7 @@ const Community = () => {
   // Toggle like
   const toggleLike = async (messageId) => {
     try {
-      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/community/messages/${messageId}/like`, {}, {
+      const response = await axios.put(`${baseURL}api/community/messages/${messageId}/like`, {}, {
         withCredentials: true
       });
       
@@ -168,7 +168,7 @@ const Community = () => {
     if (!content.trim()) return;
     
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/community/messages/${messageId}/reply`, {
+      const response = await axios.post(`${baseURL}api/community/messages/${messageId}/reply`, {
         content
       }, {
         withCredentials: true
@@ -187,7 +187,7 @@ const Community = () => {
   // Edit message
   const editMessage = async (messageId, content) => {
     try {
-      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/community/messages/${messageId}`, {
+      const response = await axios.put(`${baseURL}api/community/messages/${messageId}`, {
         content
       }, {
         withCredentials: true
@@ -207,7 +207,7 @@ const Community = () => {
     if (!window.confirm('Are you sure you want to delete this message?')) return;
 
     try {
-      const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/community/messages/${messageId}`, {
+      const response = await axios.delete(`${baseURL}api/community/messages/${messageId}`, {
         withCredentials: true
       });
 

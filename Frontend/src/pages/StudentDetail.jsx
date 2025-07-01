@@ -10,6 +10,7 @@ import {
   FaGraduationCap, FaCode, FaProjectDiagram, FaAward, FaFileAlt
 } from 'react-icons/fa';
 import './StudentDetail.css';
+import { useAppContext } from '../context/AppContext';
 
 const StudentDetail = () => {
   const { id } = useParams();
@@ -18,6 +19,7 @@ const StudentDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
+  const { baseURL } = useAppContext();
 
   useEffect(() => {
     fetchStudentDetails();
@@ -27,7 +29,7 @@ const StudentDetail = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/student/${id}`);
+      const response = await axios.get(`${baseURL}api/student/${id}`);
       setStudent(response.data.student);
     } catch (err) {
       console.error('Error fetching student details:', err);

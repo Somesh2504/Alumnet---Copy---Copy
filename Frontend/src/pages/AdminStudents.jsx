@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminStudents.css';
+import { useAppContext } from '../context/AppContext';
 
 const AdminStudents = () => {
   const [students, setStudents] = useState([]);
@@ -9,6 +10,7 @@ const AdminStudents = () => {
   const [selectedCollege, setSelectedCollege] = useState('all');
   const [colleges, setColleges] = useState([]);
   const navigate = useNavigate();
+  const { baseURL } = useAppContext();
 
   useEffect(() => {
     // Check if admin is logged in
@@ -24,7 +26,7 @@ const AdminStudents = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/students`, {
+      const response = await fetch(`${baseURL}api/admin/students`, {
         credentials: 'include'
       });
 
@@ -41,7 +43,7 @@ const AdminStudents = () => {
 
   const fetchColleges = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/colleges`, {
+      const response = await fetch(`${baseURL}api/admin/colleges`, {
         credentials: 'include'
       });
 
@@ -60,7 +62,7 @@ const AdminStudents = () => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/student/${studentId}`, {
+      const response = await fetch(`${baseURL}api/admin/student/${studentId}`, {
         method: 'DELETE',
         credentials: 'include'
       });

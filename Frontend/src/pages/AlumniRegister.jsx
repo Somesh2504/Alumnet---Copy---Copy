@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import OTPVerification from '../components/OTPVerification';
 import './AlumniRegister.css'; // External CSS
+import { useAppContext } from '../context/AppContext';
 
 const AlumniRegister = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +34,7 @@ const AlumniRegister = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const { baseURL } = useAppContext();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -57,7 +59,7 @@ const AlumniRegister = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/alumni/send-otp`, {
+      const response = await axios.post(`${baseURL}api/alumni/send-otp`, {
         email: formData.email
       });
 

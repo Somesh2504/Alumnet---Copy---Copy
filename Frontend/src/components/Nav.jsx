@@ -11,7 +11,7 @@ import axios from 'axios';
 // import jwt from 'jsonwebtoken';
 
 function Nav() {
-  const { user, logout, currentUser } = useAppContext();
+  const { user, logout, currentUser, baseURL } = useAppContext();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -92,7 +92,7 @@ function Nav() {
 
   const handleAdminLogout = async () => {
     try {
-      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/logout`, {
+      await fetch(`${baseURL}api/admin/logout`, {
         method: 'POST',
         credentials: 'include'
       });
@@ -108,7 +108,7 @@ function Nav() {
 
   const handleCollegeLogout = async () => {
     try {
-      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/college/logout`, {}, {
+      await axios.post(`${baseURL}api/college/logout`, {}, {
         withCredentials: true
       });
     } catch (error) {

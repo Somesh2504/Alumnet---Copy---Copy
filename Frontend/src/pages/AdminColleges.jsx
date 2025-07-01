@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminColleges.css';
+import { useAppContext } from '../context/AppContext';
 
 const AdminColleges = () => {
   const [colleges, setColleges] = useState([]);
@@ -15,6 +16,7 @@ const AdminColleges = () => {
     password: ''
   });
   const navigate = useNavigate();
+  const { baseURL } = useAppContext();
 
   useEffect(() => {
     // Check if admin is logged in
@@ -30,8 +32,8 @@ const AdminColleges = () => {
   const fetchColleges = async () => {
     try {
       const [allCollegesRes, pendingCollegesRes] = await Promise.all([
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/colleges`, { credentials: 'include' }),
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/pending-colleges`, { credentials: 'include' })
+        fetch(`${baseURL}api/admin/colleges`, { credentials: 'include' }),
+        fetch(`${baseURL}api/admin/pending-colleges`, { credentials: 'include' })
       ]);
 
       if (allCollegesRes.ok) {
@@ -52,7 +54,7 @@ const AdminColleges = () => {
 
   const handleApproveCollege = async (collegeId) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/approve-college/${collegeId}`, {
+      const response = await fetch(`${baseURL}api/admin/approve-college/${collegeId}`, {
         method: 'PUT',
         credentials: 'include'
       });
@@ -75,7 +77,7 @@ const AdminColleges = () => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/college/${collegeId}`, {
+      const response = await fetch(`${baseURL}api/admin/college/${collegeId}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -95,7 +97,7 @@ const AdminColleges = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/register-college`, {
+      const response = await fetch(`${baseURL}api/admin/register-college`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

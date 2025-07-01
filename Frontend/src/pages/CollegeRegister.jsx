@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './CollegeRegister.css';
+import { useAppContext } from '../context/AppContext';
 
 const CollegeRegister = () => {
   const navigate = useNavigate();
+  const { baseURL } = useAppContext();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -47,7 +49,7 @@ const CollegeRegister = () => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/college/register`, {
+      const response = await fetch(`${baseURL}api/college/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

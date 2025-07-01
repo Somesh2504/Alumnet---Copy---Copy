@@ -10,6 +10,7 @@ import {
   FaGraduationCap, FaCode, FaProjectDiagram, FaAward
 } from 'react-icons/fa';
 import './AlumniDetail.css';
+import { useAppContext } from '../context/AppContext';
 
 const AlumniDetail = () => {
   const { id } = useParams();
@@ -19,6 +20,7 @@ const AlumniDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
+  const { baseURL } = useAppContext();
 
   useEffect(() => {
     fetchAlumniDetails();
@@ -28,7 +30,7 @@ const AlumniDetail = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/alumni/${id}`);
+      const response = await axios.get(`${baseURL}api/alumni/${id}`);
       setAlumni(response.data.alumni);
     } catch (err) {
       console.error('Error fetching alumni details:', err);

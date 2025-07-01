@@ -4,7 +4,7 @@ import PageTransitionNoLoading from '../components/PageTransitionNoLoading';
 import './Testimonials.css';
 
 const Testimonials = () => {
-  const { currentUser } = useAppContext();
+  const { currentUser, baseURL } = useAppContext();
   const [testimonials, setTestimonials] = useState([]);
   const [userTestimonial, setUserTestimonial] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -35,7 +35,7 @@ const Testimonials = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/public?limit=50`);
+      const response = await fetch(`${baseURL}api/testimonials/public?limit=50`);
       const data = await response.json();
       if (data.success) {
         setTestimonials(data.testimonials);
@@ -49,7 +49,7 @@ const Testimonials = () => {
 
   const fetchUserTestimonial = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/my-testimonial`, {
+      const response = await fetch(`${baseURL}api/testimonials/my-testimonial`, {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -76,8 +76,8 @@ const Testimonials = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     try {
       const url = userTestimonial 
-        ? `${import.meta.env.VITE_BACKEND_URL}/api/testimonials/my-testimonial`
-        : `${import.meta.env.VITE_BACKEND_URL}/api/testimonials`;
+        ? `${baseURL}api/testimonials/my-testimonial`
+        : `${baseURL}api/testimonials`;
       
       const method = userTestimonial ? 'PUT' : 'POST';
 
@@ -116,7 +116,7 @@ const Testimonials = () => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/my-testimonial`, {
+      const response = await fetch(`${baseURL}api/testimonials/my-testimonial`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

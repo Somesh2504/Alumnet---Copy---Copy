@@ -12,13 +12,13 @@ const Mentor = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterSkills, setFilterSkills] = useState([]);
-  const { user, setUser } = useAppContext();
+  const { user, setUser, baseURL } = useAppContext();
   const navigate = useNavigate();
 
   const fetchAlumni = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/alumni`, {
+      const { data } = await axios.get(`${baseURL}api/alumni`, {
         withCredentials: true,
       });
       setAlumni(data.alumni);
@@ -33,7 +33,7 @@ const Mentor = () => {
   const fetchStudents = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/student`, {
+      const { data } = await axios.get(`${baseURL}api/student`, {
         withCredentials: true,
       });
       setUser(data.role);

@@ -22,6 +22,7 @@ import {
   IoClose
 } from 'react-icons/io5';
 import { useNotification } from '../context/NotificationContext';
+import { useAppContext } from '../context/AppContext';
 import './Chat.css';
 
 const Chat = ({ loggedInUserId }) => {
@@ -48,6 +49,7 @@ const Chat = ({ loggedInUserId }) => {
   const documentInputRef = useRef(null);
   const { id: receiverId } = useParams();
   const { showError, showSuccess } = useNotification();
+  const { baseURL } = useAppContext();
 
   // Track window resize for responsive design
   useEffect(() => {
@@ -96,7 +98,7 @@ const Chat = ({ loggedInUserId }) => {
       try {
         setIsLoading(true);
         // Fetch receiver details from the correct API endpoint
-        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/${receiverId}`, {
+        const { data } = await axios.get(`${baseURL}api/user/${receiverId}`, {
           withCredentials: true
         });
         console.log("data",data)
@@ -150,7 +152,7 @@ const Chat = ({ loggedInUserId }) => {
     try {
       setLoadingMessages(true);
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/messages/conversation/${loggedInUserId}/${receiverId}?page=${page}&limit=50`,
+        `${baseURL}api/messages/conversation/${loggedInUserId}/${receiverId}?page=${page}&limit=50`,
         { withCredentials: true }
       );
 
@@ -197,7 +199,7 @@ const Chat = ({ loggedInUserId }) => {
     
     try {
       await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/messages/read/${loggedInUserId}/${receiverId}`,
+        `${baseURL}api/messages/read/${loggedInUserId}/${receiverId}`,
         {},
         { withCredentials: true }
       );
@@ -302,7 +304,7 @@ const Chat = ({ loggedInUserId }) => {
     if (!loggedInUserId) return; // Don't update if user is not loaded yet
     
     try {
-      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateChatHistory`, {
+      await axios.post(`${baseURL}api/user/updateChatHistory`, {
         userId: loggedInUserId,
         chatWithId: receiverId
       }, { withCredentials: true });
@@ -400,7 +402,7 @@ const Chat = ({ loggedInUserId }) => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/chat/upload-file`, formData, {
+      const response = await axios.post(`${baseURL}api/chat/upload-file`, formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data'

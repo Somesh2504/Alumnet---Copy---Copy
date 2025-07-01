@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import OTPVerification from '../components/OTPVerification';
 import { useNotification } from '../context/NotificationContext';
+import { useAppContext } from '../context/AppContext';
 
 const StudentRegister = () => {
   const navigate = useNavigate();
   const { showError, showSuccess } = useNotification();
+  const { baseURL } = useAppContext();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -54,7 +56,7 @@ const StudentRegister = () => {
     console.log('📧 Attempting to send OTP for email:', formData.email);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/student/send-otp`, {
+      const response = await axios.post(`${baseURL}api/student/send-otp`, {
         email: formData.email
       });
 

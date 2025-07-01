@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminTestimonials.css';
+import { useAppContext } from '../context/AppContext';
 
 const AdminTestimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -15,6 +16,7 @@ const AdminTestimonials = () => {
   const [selectedTestimonial, setSelectedTestimonial] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const { baseURL } = useAppContext();
 
   const categories = [
     { value: 'general', label: 'General Experience' },
@@ -45,7 +47,7 @@ const AdminTestimonials = () => {
         ...(filters.category !== 'all' && { category: filters.category })
       });
 
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/admin/all?${queryParams}`, {
+      const response = await fetch(`${baseURL}api/testimonials/admin/all?${queryParams}`, {
         credentials: 'include'
       });
       
@@ -63,7 +65,7 @@ const AdminTestimonials = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/admin/stats`, {
+      const response = await fetch(`${baseURL}api/testimonials/admin/stats`, {
         credentials: 'include'
       });
       
@@ -78,7 +80,7 @@ const AdminTestimonials = () => {
 
   const handleStatusUpdate = async (testimonialId, updates) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/admin/${testimonialId}/status`, {
+      const response = await fetch(`${baseURL}api/testimonials/admin/${testimonialId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -104,7 +106,7 @@ const AdminTestimonials = () => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/admin/${testimonialId}`, {
+      const response = await fetch(`${baseURL}api/testimonials/admin/${testimonialId}`, {
         method: 'DELETE',
         credentials: 'include'
       });

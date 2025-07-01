@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './OTPVerification.css';
+import { useAppContext } from '../context/AppContext';
 
 const OTPVerification = ({ 
   email, 
@@ -14,6 +15,7 @@ const OTPVerification = ({
   const [error, setError] = useState('');
   const [isSendingOTP, setIsSendingOTP] = useState(false);
   const [isVerifyingOTP, setIsVerifyingOTP] = useState(false);
+  const { baseURL } = useAppContext();
 
   useEffect(() => {
     let interval;
@@ -56,7 +58,7 @@ const OTPVerification = ({
     setError('');
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/${role}/send-otp`, {
+      const response = await fetch(`${baseURL}api/${role}/send-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +114,7 @@ const OTPVerification = ({
         console.log('📧 Email:', email);
         console.log('📦 Registration data keys:', Object.keys(registrationData));
 
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/${role}/verify-otp-register`, {
+        const response = await fetch(`${baseURL}api/${role}/verify-otp-register`, {
           method: 'POST',
           body: formData, // Don't set Content-Type header for FormData
         });
@@ -139,7 +141,7 @@ const OTPVerification = ({
         console.log('📤 Sending JSON with OTP:', otpString);
         console.log('📧 Email:', email);
 
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/${role}/verify-otp-register`, {
+        const response = await fetch(`${baseURL}api/${role}/verify-otp-register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

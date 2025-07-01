@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
+import { useAppContext } from '../context/AppContext';
 
 const AdminDashboard = () => {
   const [adminInfo, setAdminInfo] = useState(null);
@@ -12,6 +13,7 @@ const AdminDashboard = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const { baseURL } = useAppContext();
 
   useEffect(() => {
     // Check if admin is logged in
@@ -27,7 +29,7 @@ const AdminDashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/dashboard-stats`, {
+      const response = await fetch(`${baseURL}api/admin/dashboard-stats`, {
         credentials: 'include'
       });
       
@@ -44,7 +46,7 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/logout`, {
+      await fetch(`${baseURL}api/admin/logout`, {
         method: 'POST',
         credentials: 'include'
       });

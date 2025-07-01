@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './TestimonialSection.css';
+import { useAppContext } from '../context/AppContext';
 
 const TestimonialSection = () => {
+  const { baseURL } = useAppContext();
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -13,7 +15,7 @@ const TestimonialSection = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/public?limit=50`);
+      const response = await fetch(`${baseURL}api/testimonials/public?limit=50`);
       const data = await response.json();
       if (data.success && data.testimonials.length > 0) {
         setTestimonials(data.testimonials);

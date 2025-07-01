@@ -12,7 +12,7 @@ function AlumniLogin() {
   
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const {setUser,setCurrentUser}=useAppContext()
+  const {setUser,setCurrentUser, baseURL}=useAppContext()
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -58,7 +58,7 @@ function AlumniLogin() {
     }
    
    try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/alumni/login`, 
+      const response = await axios.post(`${baseURL}api/alumni/login`, 
         {  
         email: formData.email,
         password: formData.password 

@@ -10,10 +10,10 @@ export const AppContextProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(true);
   const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
   const [unreadMessages, setUnreadMessages] = useState({});
-
+  const baseURL = "https://alumnet-backend-fndz.onrender.com/";
   const fetchUser = async () => {
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/`, {
+      const { data } = await axios.get(`${baseURL}api/user/`, {
         withCredentials: true,
       });
 
@@ -32,7 +32,7 @@ export const AppContextProvider = ({ children }) => {
 
   const fetchCollegeUser = async () => {
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/college/dashboard`, {
+      const { data } = await axios.get(`${baseURL}api/college/dashboard`, {
         withCredentials: true
       });
 
@@ -154,7 +154,8 @@ export const AppContextProvider = ({ children }) => {
     setUserChat,
     authLoading,
     unreadMessages,
-    clearUnreadCount
+    clearUnreadCount,
+    baseURL
   }), [user, currentUser, userChat, authLoading, unreadMessages]);
 
   return (

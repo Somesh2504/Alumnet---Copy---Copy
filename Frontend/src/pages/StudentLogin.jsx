@@ -9,7 +9,7 @@ function StudentLogin() {
     password: '',
     rememberMe: false
   });
-  const {setUser,setCurrentUser}= useAppContext()
+  const {setUser,setCurrentUser, baseURL}= useAppContext()
   const navigate = useNavigate()
   const [errors, setErrors] = useState({});
 
@@ -54,9 +54,9 @@ function StudentLogin() {
       setErrors(newErrors);
       return;
     }
-
+   
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/student/login`, 
+      const response = await axios.post(`${baseURL}api/student/login`, 
         {  
         email: formData.email,
         password: formData.password 

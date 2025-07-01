@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminLogin.css';
+import { useAppContext } from '../context/AppContext';
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const AdminLogin = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { baseURL } = useAppContext();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +29,7 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/login`, {
+      const response = await fetch(`${baseURL}api/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
