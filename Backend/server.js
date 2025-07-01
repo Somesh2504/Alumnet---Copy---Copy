@@ -35,7 +35,7 @@ app.get('/',(req,res)=>{
 
 
 app.use(cors({
-  origin: '*',
+  origin: "https://alumnet-frontend-c0cg.onrender.com",
   credentials: true,
 }));
 app.use(cookieParser());
