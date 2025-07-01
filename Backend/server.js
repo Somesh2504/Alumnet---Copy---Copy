@@ -35,7 +35,7 @@ app.get('/',(req,res)=>{
 
 const allowedOrigins = process.env.NODE_ENV === "production"
   ? [process.env.FRONTEND_URL]
-  : ["http://localhost:5173", "http://localhost:3000"];
+  : ["https://alumnet-frontend-c0cg.onrender.com/"];
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
