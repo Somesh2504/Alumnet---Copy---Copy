@@ -96,7 +96,7 @@ const Chat = ({ loggedInUserId }) => {
       try {
         setIsLoading(true);
         // Fetch receiver details from the correct API endpoint
-        const { data } = await axios.get(`http://localhost:5000/api/user/${receiverId}`, {
+        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/${receiverId}`, {
           withCredentials: true
         });
         console.log("data",data)
@@ -150,7 +150,7 @@ const Chat = ({ loggedInUserId }) => {
     try {
       setLoadingMessages(true);
       const { data } = await axios.get(
-        `http://localhost:5000/api/messages/conversation/${loggedInUserId}/${receiverId}?page=${page}&limit=50`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/messages/conversation/${loggedInUserId}/${receiverId}?page=${page}&limit=50`,
         { withCredentials: true }
       );
 
@@ -197,7 +197,7 @@ const Chat = ({ loggedInUserId }) => {
     
     try {
       await axios.put(
-        `http://localhost:5000/api/messages/read/${loggedInUserId}/${receiverId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/messages/read/${loggedInUserId}/${receiverId}`,
         {},
         { withCredentials: true }
       );
@@ -302,7 +302,7 @@ const Chat = ({ loggedInUserId }) => {
     if (!loggedInUserId) return; // Don't update if user is not loaded yet
     
     try {
-      await axios.post("http://localhost:5000/api/user/updateChatHistory", {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/updateChatHistory`, {
         userId: loggedInUserId,
         chatWithId: receiverId
       }, { withCredentials: true });
@@ -400,7 +400,7 @@ const Chat = ({ loggedInUserId }) => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('http://localhost:5000/api/chat/upload-file', formData, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/chat/upload-file`, formData, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data'

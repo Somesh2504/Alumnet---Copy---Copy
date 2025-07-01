@@ -93,7 +93,7 @@ function Nav() {
 
   const handleAdminLogout = async () => {
     try {
-      await fetch('http://localhost:5000/api/admin/logout', {
+      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/logout`, {
         method: 'POST',
         credentials: 'include'
       });
@@ -109,7 +109,7 @@ function Nav() {
 
   const handleCollegeLogout = async () => {
     try {
-      await axios.post('http://localhost:5000/api/college/logout', {}, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/college/logout`, {}, {
         withCredentials: true
       });
     } catch (error) {

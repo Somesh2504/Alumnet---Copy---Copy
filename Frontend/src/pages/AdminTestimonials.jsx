@@ -45,7 +45,7 @@ const AdminTestimonials = () => {
         ...(filters.category !== 'all' && { category: filters.category })
       });
 
-      const response = await fetch(`http://localhost:5000/api/testimonials/admin/all?${queryParams}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/admin/all?${queryParams}`, {
         credentials: 'include'
       });
       
@@ -63,7 +63,7 @@ const AdminTestimonials = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/testimonials/admin/stats', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/admin/stats`, {
         credentials: 'include'
       });
       
@@ -78,7 +78,7 @@ const AdminTestimonials = () => {
 
   const handleStatusUpdate = async (testimonialId, updates) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/testimonials/admin/${testimonialId}/status`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/admin/${testimonialId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -104,7 +104,7 @@ const AdminTestimonials = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/testimonials/admin/${testimonialId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/admin/${testimonialId}`, {
         method: 'DELETE',
         credentials: 'include'
       });

@@ -27,7 +27,7 @@ const StudentDetail = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.get(`http://localhost:5000/api/student/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/student/${id}`);
       setStudent(response.data.student);
     } catch (err) {
       console.error('Error fetching student details:', err);

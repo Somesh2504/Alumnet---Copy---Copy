@@ -18,7 +18,7 @@ const Mentor = () => {
   const fetchAlumni = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('http://localhost:5000/api/alumni', {
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/alumni`, {
         withCredentials: true,
       });
       setAlumni(data.alumni);
@@ -33,7 +33,7 @@ const Mentor = () => {
   const fetchStudents = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('http://localhost:5000/api/student', {
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/student`, {
         withCredentials: true,
       });
       setUser(data.role);

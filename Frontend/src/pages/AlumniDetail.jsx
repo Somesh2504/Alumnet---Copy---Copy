@@ -28,7 +28,7 @@ const AlumniDetail = () => {
     try {
       setLoading(true);
       setError('');
-      const response = await axios.get(`http://localhost:5000/api/alumni/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/alumni/${id}`);
       setAlumni(response.data.alumni);
     } catch (err) {
       console.error('Error fetching alumni details:', err);

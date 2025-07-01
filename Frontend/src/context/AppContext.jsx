@@ -13,7 +13,7 @@ export const AppContextProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/user/', {
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/`, {
         withCredentials: true,
       });
 
@@ -32,7 +32,7 @@ export const AppContextProvider = ({ children }) => {
 
   const fetchCollegeUser = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/college/dashboard', {
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/college/dashboard`, {
         withCredentials: true
       });
 

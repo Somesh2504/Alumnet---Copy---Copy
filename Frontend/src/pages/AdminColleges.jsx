@@ -30,8 +30,8 @@ const AdminColleges = () => {
   const fetchColleges = async () => {
     try {
       const [allCollegesRes, pendingCollegesRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/colleges', { credentials: 'include' }),
-        fetch('http://localhost:5000/api/admin/pending-colleges', { credentials: 'include' })
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/colleges`, { credentials: 'include' }),
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/pending-colleges`, { credentials: 'include' })
       ]);
 
       if (allCollegesRes.ok) {
@@ -52,7 +52,7 @@ const AdminColleges = () => {
 
   const handleApproveCollege = async (collegeId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/approve-college/${collegeId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/approve-college/${collegeId}`, {
         method: 'PUT',
         credentials: 'include'
       });
@@ -75,7 +75,7 @@ const AdminColleges = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/college/${collegeId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/college/${collegeId}`, {
         method: 'DELETE',
         credentials: 'include'
       });
@@ -95,7 +95,7 @@ const AdminColleges = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:5000/api/admin/register-college', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/register-college`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

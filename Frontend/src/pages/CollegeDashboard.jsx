@@ -43,7 +43,7 @@ const CollegeDashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/college/dashboard', {
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/college/dashboard`, {
         withCredentials: true
       });
       setDashboardData(data);
@@ -57,7 +57,7 @@ const CollegeDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:5000/api/college/logout', {}, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/college/logout`, {}, {
         withCredentials: true
       });
       logout();
@@ -304,7 +304,7 @@ const StudentsManagement = () => {
   const fetchStudents = async () => {
     try {
       setError('');
-      const { data } = await axios.get('http://localhost:5000/api/college/student-records', {
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/college/student-records`, {
         withCredentials: true
       });
       
@@ -328,7 +328,7 @@ const StudentsManagement = () => {
   const deleteStudent = async (recordId) => {
     if (window.confirm('Are you sure you want to delete this student record?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/college/student-record/${recordId}`, {
+        await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/college/student-record/${recordId}`, {
           withCredentials: true
         });
         fetchStudents();
@@ -345,7 +345,7 @@ const StudentsManagement = () => {
     setMessage('');
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/college/student-record', formData, {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/college/student-record`, formData, {
         withCredentials: true
       });
 
@@ -543,7 +543,7 @@ const AlumniManagement = () => {
   const fetchAlumni = async () => {
     try {
       setError('');
-      const { data } = await axios.get('http://localhost:5000/api/college/alumni-records', {
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/college/alumni-records`, {
         withCredentials: true
       });
       
@@ -567,7 +567,7 @@ const AlumniManagement = () => {
   const deleteAlumni = async (recordId) => {
     if (window.confirm('Are you sure you want to delete this alumni record?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/college/alumni-record/${recordId}`, {
+        await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/college/alumni-record/${recordId}`, {
           withCredentials: true
         });
         fetchAlumni();
@@ -584,7 +584,7 @@ const AlumniManagement = () => {
     setMessage('');
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/college/alumni-record', formData, {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/college/alumni-record`, formData, {
         withCredentials: true
       });
 
@@ -782,7 +782,7 @@ const AddRecords = () => {
     setMessage('');
 
     try {
-      const endpoint = recordType === 'student' ? 'http://localhost:5000/api/college/student-record' : 'http://localhost:5000/api/college/alumni-record';
+      const endpoint = recordType === 'student' ? `${import.meta.env.VITE_BACKEND_URL}/api/college/student-record` : `${import.meta.env.VITE_BACKEND_URL}/api/college/alumni-record`;
       const payload = {
         name: formData.name,
         email: formData.email,

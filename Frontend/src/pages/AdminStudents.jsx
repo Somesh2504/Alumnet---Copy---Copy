@@ -24,7 +24,7 @@ const AdminStudents = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/students', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/students`, {
         credentials: 'include'
       });
 
@@ -41,7 +41,7 @@ const AdminStudents = () => {
 
   const fetchColleges = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/colleges', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/colleges`, {
         credentials: 'include'
       });
 
@@ -60,7 +60,7 @@ const AdminStudents = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/student/${studentId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/student/${studentId}`, {
         method: 'DELETE',
         credentials: 'include'
       });

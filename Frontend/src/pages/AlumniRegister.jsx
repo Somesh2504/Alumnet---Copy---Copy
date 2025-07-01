@@ -57,7 +57,7 @@ const AlumniRegister = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/alumni/send-otp', {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/alumni/send-otp`, {
         email: formData.email
       });
 

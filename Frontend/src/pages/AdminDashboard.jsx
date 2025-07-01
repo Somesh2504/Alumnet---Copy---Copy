@@ -27,7 +27,7 @@ const AdminDashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/dashboard-stats', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/dashboard-stats`, {
         credentials: 'include'
       });
       
@@ -44,7 +44,7 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:5000/api/admin/logout', {
+      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/logout`, {
         method: 'POST',
         credentials: 'include'
       });

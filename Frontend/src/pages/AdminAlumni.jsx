@@ -24,7 +24,7 @@ const AdminAlumni = () => {
 
   const fetchAlumni = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/alumni', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/alumni`, {
         credentials: 'include'
       });
 
@@ -41,7 +41,7 @@ const AdminAlumni = () => {
 
   const fetchColleges = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/admin/colleges', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/colleges`, {
         credentials: 'include'
       });
 
@@ -60,7 +60,7 @@ const AdminAlumni = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/alumni/${alumniId}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/alumni/${alumniId}`, {
         method: 'DELETE',
         credentials: 'include'
       });

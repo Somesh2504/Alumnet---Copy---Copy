@@ -47,7 +47,7 @@ const CollegeRegister = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/college/register', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/college/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

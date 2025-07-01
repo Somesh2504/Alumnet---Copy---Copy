@@ -29,7 +29,7 @@ const CollegeLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/college/login', 
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/college/login`, 
         {
           email: formData.email,
           password: formData.password 

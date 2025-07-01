@@ -54,7 +54,7 @@ const StudentRegister = () => {
     console.log('📧 Attempting to send OTP for email:', formData.email);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/student/send-otp', {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/student/send-otp`, {
         email: formData.email
       });
 
@@ -74,9 +74,7 @@ const StudentRegister = () => {
         showError('Failed to send OTP. Please try again.');
       }
     } finally {
-      setIsLoading(false
-
-      );
+      setIsLoading(false);
     }
   };
 
@@ -90,7 +88,6 @@ const StudentRegister = () => {
       setRegistrationSuccess(true);
       showSuccess('Registration successful! Redirecting to login...');
       setTimeout(() => {
-       
         navigate('/login/student');
       }, 2000);
     } else {

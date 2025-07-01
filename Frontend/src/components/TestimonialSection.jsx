@@ -13,7 +13,7 @@ const TestimonialSection = () => {
 
   const fetchTestimonials = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/testimonials/public?limit=50');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/testimonials/public?limit=50`);
       const data = await response.json();
       if (data.success && data.testimonials.length > 0) {
         setTestimonials(data.testimonials);
