@@ -9,7 +9,7 @@ import Alumni from './Models/AlumniModel.js';
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*'
+    origin: "https://alumnet-frontend-c0cg.onrender.com"
     credentials: true,
   },
 });
