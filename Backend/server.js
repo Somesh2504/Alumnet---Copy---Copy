@@ -33,11 +33,9 @@ app.get('/',(req,res)=>{
     res.send("API is running");
 })
 
-const allowedOrigins = process.env.NODE_ENV === "production"
-  ? [process.env.FRONTEND_URL]
-  : ["https://alumnet-frontend-c0cg.onrender.com/"];
+
 app.use(cors({
-  origin: allowedOrigins,
+  origin: '*',
   credentials: true,
 }));
 app.use(cookieParser());
