@@ -1,0 +1,438 @@
+/* Admin Alumni Styles */
+.admin-alumni {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
+  padding-top: 100px; /* Account for fixed navbar */
+}
+
+/* Loading State */
+.admin-alumni-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding-top: 80px; /* Account for fixed navbar */
+}
+
+.admin-alumni-loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(102, 126, 234, 0.2);
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Header */
+.admin-alumni-header {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 20px 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.admin-alumni-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-alumni-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-alumni-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-alumni-back-btn:hover {
+  background: rgba(102, 126, 234, 0.2);
+  transform: translateY(-2px);
+}
+
+.admin-alumni-back-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.admin-alumni-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d3748;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.admin-alumni-header-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.admin-alumni-stat-item {
+  text-align: center;
+  padding: 15px 20px;
+  background: rgba(159, 122, 234, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(159, 122, 234, 0.2);
+}
+
+.admin-alumni-stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #805ad5;
+}
+
+.admin-alumni-stat-label {
+  font-size: 14px;
+  color: #718096;
+  font-weight: 500;
+}
+
+/* Controls */
+.admin-alumni-controls {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.admin-alumni-search-container {
+  position: relative;
+  flex: 1;
+}
+
+.admin-alumni-search-container svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: #718096;
+}
+
+.admin-alumni-search-input {
+  width: 100%;
+  padding: 12px 16px 12px 48px;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.admin-alumni-search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.admin-alumni-filters {
+  display: flex;
+  gap: 15px;
+}
+
+.admin-alumni-college-filter {
+  padding: 12px 16px;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.admin-alumni-college-filter:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Alumni Grid */
+.admin-alumni-content {
+  margin-bottom: 30px;
+}
+
+.admin-alumni-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.admin-alumni-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.admin-alumni-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.admin-alumni-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-alumni-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9f7aea, #805ad5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(159, 122, 234, 0.3);
+  overflow: hidden;
+}
+
+.admin-alumni-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-alumni-avatar svg {
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
+.admin-alumni-status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.admin-alumni-status-badge.active {
+  background: rgba(159, 122, 234, 0.1);
+  color: #805ad5;
+  border: 1px solid rgba(159, 122, 234, 0.3);
+}
+
+.admin-alumni-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.admin-alumni-email {
+  margin: 0 0 8px 0;
+  color: #667eea;
+  font-weight: 500;
+}
+
+.admin-alumni-college,
+.admin-alumni-branch,
+.admin-alumni-graduation,
+.admin-alumni-company,
+.admin-alumni-position {
+  margin: 0 0 5px 0;
+  color: #4a5568;
+  font-size: 14px;
+}
+
+.admin-alumni-college strong,
+.admin-alumni-branch strong,
+.admin-alumni-graduation strong,
+.admin-alumni-company strong,
+.admin-alumni-position strong {
+  color: #2d3748;
+}
+
+.admin-alumni-date {
+  margin: 0 0 20px 0;
+  color: #718096;
+  font-size: 14px;
+}
+
+.admin-alumni-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-alumni-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.admin-alumni-action-btn.view {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.admin-alumni-action-btn.view:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.admin-alumni-action-btn.delete {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  color: white;
+}
+
+.admin-alumni-action-btn.delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(245, 101, 101, 0.4);
+}
+
+.admin-alumni-action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Empty State */
+.admin-alumni-empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  border: 2px dashed rgba(102, 126, 234, 0.3);
+}
+
+.admin-alumni-empty-state svg {
+  width: 60px;
+  height: 60px;
+  color: #718096;
+  margin-bottom: 20px;
+}
+
+.admin-alumni-empty-state h3 {
+  margin: 0 0 10px 0;
+  color: #2d3748;
+  font-size: 1.3rem;
+}
+
+.admin-alumni-empty-state p {
+  margin: 0;
+  color: #718096;
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-alumni {
+    padding: 15px;
+  }
+  
+  .admin-alumni-header {
+    padding: 15px 20px;
+  }
+  
+  .admin-alumni-header-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .admin-alumni-header-left {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .admin-alumni-controls {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .admin-alumni-filters {
+    width: 100%;
+  }
+  
+  .admin-alumni-college-filter {
+    width: 100%;
+  }
+  
+  .admin-alumni-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-alumni-actions {
+    flex-direction: column;
+  }
+  
+  .admin-alumni-header-stats {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-alumni {
+    padding: 10px;
+  }
+  
+  .admin-alumni-header {
+    padding: 15px;
+  }
+  
+  .admin-alumni-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .admin-alumni-card {
+    padding: 20px;
+  }
+  
+  .admin-alumni-stat-number {
+    font-size: 1.5rem;
+  }
+} 
