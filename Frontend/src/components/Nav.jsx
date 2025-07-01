@@ -8,7 +8,6 @@ import Textlogo from '../assets/SideLogo3.png';
 // Import Link from react-router-dom
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Alumni from '../../../Backend/Models/AlumniModel';
 // import jwt from 'jsonwebtoken';
 
 function Nav() {
