@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"node server.js\" \"node socketServer.js\" \"node createSuperAdmin.js\"",
-    "server": "concurrently \"nodemon server.js\" \"nodemon socketServer.js\" \"node createSuperAdmin.js\""
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "dev": "nodemon index.js"
   },
   "type": "module",
   "keywords": [],

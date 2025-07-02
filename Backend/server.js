@@ -69,9 +69,8 @@ if (process.env.NODE_ENV === "production") {
   }));
 }
 
-app.listen(PORT,()=>{
-    connectDB();
-    console.log(`server is running at http://localhost:${PORT}`)
-})
+// Instead, just connect to database and export app
+connectDB();
+console.log(`API server configured for port ${PORT}`);
 
 export default app
