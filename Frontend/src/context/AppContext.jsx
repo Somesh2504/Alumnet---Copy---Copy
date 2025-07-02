@@ -125,14 +125,30 @@ export const AppContextProvider = ({ children }) => {
     checkAuthStatus();
   }, []); // Only runs once on mount
 
-  const logout = () => {
-    setUser(null);
-    setCurrentUser(null);
-    setUserChat([]);
-    setUnreadMessages({});
-    setHasCheckedAuth(false); // Reset the flag on logout
-    // Clear token from localStorage
-    localStorage.removeItem('token');
+  const logout = async () => {
+    try {
+      // Call appropriate logout endpoint based on user type
+      if (user === 'student') {
+        await axios.post(`${baseURL}api/student/logout`, {}, { withCredentials: true });
+      } else if (user === 'alumni') {
+        await axios.post(`${baseURL}api/alumni/logout`, {}, { withCredentials: true });
+      } else if (user === 'college') {
+        await axios.post(`${baseURL}api/college/logout`, {}, { withCredentials: true });
+      } else if (user === 'admin') {
+        await axios.post(`${baseURL}api/admin/logout`, {}, { withCredentials: true });
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      // Clear local state regardless of server response
+      setUser(null);
+      setCurrentUser(null);
+      setUserChat([]);
+      setUnreadMessages({});
+      setHasCheckedAuth(false); // Reset the flag on logout
+      // Clear token from localStorage
+      localStorage.removeItem('token');
+    }
   };
 
   // Clear unread count for a specific user

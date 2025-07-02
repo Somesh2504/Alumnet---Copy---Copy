@@ -5,7 +5,8 @@ import {
   getStudents,
   sendVerificationOTP,
   verifyOTPAndRegister,
-  getStudentById
+  getStudentById,
+  logoutStudent
 } from '../Controller/StudentController.js';
 import authUser from '../middlewares/authUser.js';
 import { upload } from '../config/storage.js';
@@ -19,6 +20,7 @@ studentRouter.post('/verify-otp-register', upload.single('profilePicture'), veri
 // Legacy routes (keeping for backward compatibility)
 studentRouter.post('/register', registerStudent);
 studentRouter.post('/login', loginStudent);
+studentRouter.post('/logout', authUser, logoutStudent);
 studentRouter.get('/', authUser, getStudents);
 studentRouter.get('/:id', getStudentById);
 

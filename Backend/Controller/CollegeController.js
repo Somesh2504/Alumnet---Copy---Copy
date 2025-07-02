@@ -87,8 +87,9 @@ export const collegeLogin = async (req, res) => {
     res.cookie('collegeToken', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
     });
 
     res.status(200).json({
@@ -421,7 +422,8 @@ export const collegeLogout = async (req, res) => {
     res.clearCookie('collegeToken', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict'
+      sameSite: 'lax',
+      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
     });
 
     res.status(200).json({ message: 'College logged out successfully' });

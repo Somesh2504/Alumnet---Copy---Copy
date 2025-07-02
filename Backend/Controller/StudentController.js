@@ -325,8 +325,9 @@ export const verifyOTPAndRegister = async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'Lax',
+      sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
     });
     res.status(201).json({
       message: 'Student registered successfully',
@@ -421,8 +422,9 @@ export const loginStudent = async (req,res)=>{
        res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Lax',
+        sameSite: 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
       })
        .status(200)
        .json({
@@ -492,5 +494,22 @@ export const getStudentById = async (req, res) => {
   } catch (error) {
     console.log("Error in Fetching Student Details by ID:", error.message);
     res.status(500).json({ message: "Server Error in Fetching Student Details" });
+  }
+};
+
+// Student Logout
+export const logoutStudent = async (req, res) => {
+  try {
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
+    });
+
+    res.status(200).json({ message: 'Student logged out successfully' });
+  } catch (error) {
+    console.error('Student logout error:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

@@ -31,8 +31,9 @@ export const adminLogin = async (req, res) => {
     res.cookie('adminToken', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
     });
 
     res.status(200).json({
@@ -222,7 +223,8 @@ export const adminLogout = async (req, res) => {
     res.clearCookie('adminToken', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict'
+      sameSite: 'lax',
+      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
     });
 
     res.status(200).json({ message: 'Admin logged out successfully' });
