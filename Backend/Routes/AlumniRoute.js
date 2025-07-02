@@ -4,7 +4,7 @@ import authUser from '../middlewares/authUser.js'
 import { upload } from '../config/storage.js'
 const alumniRouter = express.Router()
 
-alumniRouter.get('/',authUser,getAlumni)
+alumniRouter.get('/',getAlumni)
 alumniRouter.get('/:id', getAlumniById)
 
 // New secure registration flow with OTP
