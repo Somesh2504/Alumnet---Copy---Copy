@@ -33,15 +33,6 @@ app.get('/',(req,res)=>{
     res.send("API is running");
 })
 
-// Test endpoint to check authentication
-app.get('/api/test-auth', authUser, (req, res) => {
-    console.log('Test auth endpoint called with user:', req.user);
-    res.json({ 
-        message: "Authentication working", 
-        user: req.user,
-        cookies: req.cookies 
-    });
-});
 
 app.use(cors({
   origin: "https://alumnet-frontend-c0cg.onrender.com",
