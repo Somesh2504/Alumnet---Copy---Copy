@@ -444,13 +444,29 @@ export const loginStudent = async (req,res)=>{
 //get  api/student
 export const getStudents = async (req,res)=>{
    try {
+    // Check if user is a Student or Alumni
+    let user = await Alumni.findById(req.user.id);
+    let userRole = 'alumni';
     
-    const alumni=await Alumni.findById(req.user.id)
-    const studentsList = await Student.find().select("-password")
-    res.status(200).json({students:studentsList,user:req.user,role:alumni.role})
+    if (!user) {
+      // If not found in Alumni collection, check Student collection
+      user = await Student.findById(req.user.id);
+      userRole = 'student';
+    }
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    const studentsList = await Student.find().select("-password");
+    res.status(200).json({
+      students: studentsList,
+      user: user,
+      role: userRole
+    });
    } catch (error) {
-    console.log("Error at fetching student details")
-    res.status(400).json({message:"Error in fetching dstudent detail"})
+    console.log("Error at fetching student details", error.message);
+    res.status(500).json({message:"Error in fetching student detail"});
    }
 }
 
