@@ -427,6 +427,7 @@ export const loginAlumni =async (req,res)=>{
 
 // GET /api/alumni
 export const getAlumni = async (req,res)=>{
+  console.log("in get alumni function **********")
     try {
         const student=await Student.findById(req.user.id);  // ❌ PROBLEM HERE
         const alumniList =await Alumni.find().select("-password")
