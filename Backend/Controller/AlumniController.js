@@ -431,10 +431,26 @@ export const loginAlumni =async (req,res)=>{
 export const getAlumni = async (req,res)=>{
   console.log("in get alumni function **********")
     try {
-        const student=await Student.findById(req.user.id);  // ❌ PROBLEM HERE
-        const alumniList =await Alumni.find().select("-password")
-        const user=req.user;
-        res.status(200).json({alumni:alumniList,user:user,role:student.role})  // ❌ student.role will fail if user is alumni
+        // Check if user is a Student or Alumni
+        let user = await Alumni.findById(req.user.id);
+        let userRole = 'alumni';
+        
+        if (!user) {
+          // If not found in Alumni collection, check Student collection
+          user = await Student.findById(req.user.id);
+          userRole = 'student';
+        }
+        
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        
+        const alumniList = await Alumni.find().select("-password");
+        res.status(200).json({
+          alumni: alumniList,
+          user: req.user,
+          role: userRole
+        });
     } catch (error) {
         console.log("Error in Fetching Alumni Details " ,error.message)
         return res.status(500).json({message:"Server Error in Fetching Alumni Details"})

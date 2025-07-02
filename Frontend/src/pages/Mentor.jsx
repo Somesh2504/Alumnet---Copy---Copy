@@ -12,7 +12,7 @@ const Mentor = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterSkills, setFilterSkills] = useState([]);
-  const { user, setUser, baseURL } = useAppContext();
+  const { user, setUser, baseURL, authLoading } = useAppContext();
   const navigate = useNavigate();
 
   const fetchAlumni = async () => {
@@ -46,12 +46,14 @@ const Mentor = () => {
   };
 
   useEffect(() => {
-    if (user === 'student') {
-      fetchAlumni();
-    } else if (user === 'alumni') {
-      fetchStudents();
+    if (!authLoading && user) {
+      if (user === 'student') {
+        fetchAlumni();
+      } else if (user === 'alumni') {
+        fetchStudents();
+      }
     }
-  }, [user]);
+  }, [user, authLoading]);
 
   // Filter data based on search and skills
   const filteredData = (user === 'student' ? alumni : students).filter(item => {
@@ -140,6 +142,18 @@ const Mentor = () => {
       }
     }
   };
+
+  if (authLoading) {
+    return (
+      <div className="mentor-loading">
+        <div className="mentor-loading-container">
+          <div className="mentor-loading-spinner"></div>
+          <h2>Authenticating...</h2>
+          <p>Please wait while we verify your credentials</p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
