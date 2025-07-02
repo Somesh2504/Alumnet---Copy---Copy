@@ -42,7 +42,8 @@ export const adminLogin = async (req, res) => {
         id: admin._id,
         email: admin.email,
         role: admin.role
-      }
+      },
+      token: token // Include token in response for localStorage
     });
   } catch (error) {
     console.error('Admin login error:', error);

@@ -4,7 +4,16 @@ import Admin from '../Models/Admin.js';
 export const authAdmin = async (req, res, next) => {
   console.log("***** in auth admin *******")
   try {
-    const token = req.cookies.adminToken;
+    // Check for token in Authorization header first (Bearer token)
+    let token = null;
+    const authHeader = req.headers.authorization;
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.substring(7); // Remove 'Bearer ' prefix
+    } else {
+      // Fallback to cookies
+      token = req.cookies.adminToken;
+    }
     
     if (!token) {
       return res.status(401).json({ message: 'Access denied. No token provided.' });

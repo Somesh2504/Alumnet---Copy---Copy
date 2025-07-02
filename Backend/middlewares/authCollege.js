@@ -3,7 +3,16 @@ import College from '../Models/College.js';
 
 export const authCollege = async (req, res, next) => {
   try {
-    const token = req.cookies.collegeToken;
+    // Check for token in Authorization header first (Bearer token)
+    let token = null;
+    const authHeader = req.headers.authorization;
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.substring(7); // Remove 'Bearer ' prefix
+    } else {
+      // Fallback to cookies
+      token = req.cookies.collegeToken;
+    }
     
     if (!token) {
       return res.status(401).json({ message: 'Access denied. No token provided.' });

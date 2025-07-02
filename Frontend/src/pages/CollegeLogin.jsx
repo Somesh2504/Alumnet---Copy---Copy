@@ -39,6 +39,11 @@ const CollegeLogin = () => {
       
       console.log('College login successful:', response.data);
       
+      // Store token in localStorage if provided
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+      }
+      
       // Set currentUser with the college data and add role
       const userData = {
         ...response.data.college,

@@ -43,6 +43,12 @@ const AdminLogin = () => {
       if (response.ok) {
         // Store admin info in localStorage or context
         localStorage.setItem('adminInfo', JSON.stringify(data.admin));
+        
+        // Store token in localStorage if provided
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+        }
+        
         // Redirect to admin dashboard (you'll need to create this)
         navigate('/admin/dashboard');
       } else {

@@ -13,8 +13,17 @@ export const AppContextProvider = ({ children }) => {
   const baseURL = "https://alumnet-backend-fndz.onrender.com/";
   const fetchUser = async () => {
     try {
+      const storedToken = localStorage.getItem('token');
+      const headers = {};
+      
+      // Add Authorization header if token exists
+      if (storedToken) {
+        headers.Authorization = `Bearer ${storedToken}`;
+      }
+
       const { data } = await axios.get(`${baseURL}api/user/`, {
         withCredentials: true,
+        headers
       });
 
       console.log('fetchUser success:', data);
@@ -32,8 +41,17 @@ export const AppContextProvider = ({ children }) => {
 
   const fetchCollegeUser = async () => {
     try {
+      const storedToken = localStorage.getItem('token');
+      const headers = {};
+      
+      // Add Authorization header if token exists
+      if (storedToken) {
+        headers.Authorization = `Bearer ${storedToken}`;
+      }
+
       const { data } = await axios.get(`${baseURL}api/college/dashboard`, {
-        withCredentials: true
+        withCredentials: true,
+        headers
       });
 
       console.log('fetchCollegeUser success:', data);
@@ -51,28 +69,90 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
+  const fetchAdminUser = async () => {
+    try {
+      const storedToken = localStorage.getItem('token');
+      const storedAdminInfo = localStorage.getItem('adminInfo');
+      
+      if (!storedAdminInfo) {
+        return false;
+      }
+
+      const adminInfo = JSON.parse(storedAdminInfo);
+      const headers = {};
+      
+      // Add Authorization header if token exists
+      if (storedToken) {
+        headers.Authorization = `Bearer ${storedToken}`;
+      }
+
+      // For admin, we can use the stored info since it's already validated
+      setCurrentUser({
+        ...adminInfo,
+        role: 'admin'
+      });
+      setUser('admin');
+      setAuthLoading(false);
+      return true;
+    } catch (err) {
+      console.error("fetchAdminUser failed: ", err);
+      return false;
+    }
+  };
+
   const checkAuthStatus = async () => {
     if (hasCheckedAuth) return; // Don't check again if already checked
     
     console.log('checkAuthStatus started');
     setAuthLoading(true);
     
-    // Always check server authentication on page load
-    // First try to fetch regular user
-    const userSuccess = await fetchUser();
-    console.log('userSuccess:', userSuccess);
+    // Check if token exists in localStorage
+    const storedToken = localStorage.getItem('token');
+    const storedAdminInfo = localStorage.getItem('adminInfo');
     
-    // If regular user fetch fails, try college user
-    if (!userSuccess) {
-      const collegeSuccess = await fetchCollegeUser();
-      console.log('collegeSuccess:', collegeSuccess);
-      if (!collegeSuccess) {
-        // Both authentication checks failed - user is not logged in
-        console.log('Both auth checks failed, clearing user state');
-        setCurrentUser(null);
-        setUser(null);
-        setUserChat([]);
-        setAuthLoading(false);
+          if (storedToken || storedAdminInfo) {
+        console.log('Token found in localStorage, attempting authentication');
+        
+        // Try to authenticate with stored token
+        const userSuccess = await fetchUser();
+        console.log('userSuccess:', userSuccess);
+        
+        if (!userSuccess) {
+          const collegeSuccess = await fetchCollegeUser();
+          console.log('collegeSuccess:', collegeSuccess);
+          
+          if (!collegeSuccess) {
+            const adminSuccess = await fetchAdminUser();
+            console.log('adminSuccess:', adminSuccess);
+            
+            if (!adminSuccess) {
+              // If all fail, clear localStorage and state
+              console.log('Authentication failed, clearing stored data');
+              localStorage.removeItem('token');
+              localStorage.removeItem('adminInfo');
+              setCurrentUser(null);
+              setUser(null);
+              setUserChat([]);
+              setAuthLoading(false);
+            }
+          }
+        }
+      } else {
+      // No stored token, try cookie-based authentication
+      console.log('No stored token, trying cookie-based authentication');
+      const userSuccess = await fetchUser();
+      console.log('userSuccess:', userSuccess);
+      
+      if (!userSuccess) {
+        const collegeSuccess = await fetchCollegeUser();
+        console.log('collegeSuccess:', collegeSuccess);
+        if (!collegeSuccess) {
+          console.log('Both auth checks failed, user not logged in');
+          setCurrentUser(null);
+          setUser(null);
+          setUserChat([]);
+          setAuthLoading(false);
+        }
       }
     }
     
