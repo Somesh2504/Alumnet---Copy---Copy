@@ -12,19 +12,50 @@ const Mentor = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterSkills, setFilterSkills] = useState([]);
-  const { user, setUser, baseURL } = useAppContext();
+  const { user, setUser, baseURL, currentUser } = useAppContext();
   const navigate = useNavigate();
+
+  // Add debugging
+  console.log('Mentor component - user state:', user);
+  console.log('Mentor component - currentUser:', currentUser);
+  console.log('Mentor component - baseURL:', baseURL);
+
+  // Test authentication function
+  const testAuth = async () => {
+    try {
+      console.log('Testing authentication...');
+      const response = await axios.get(`${baseURL}api/test-auth`, {
+        withCredentials: true,
+      });
+      console.log('Auth test successful:', response.data);
+      return true;
+    } catch (err) {
+      console.error('Auth test failed:', err.response?.data);
+      return false;
+    }
+  };
 
   const fetchAlumni = async () => {
     try {
+      console.log('fetchAlumni called - user:', user);
+      
+      // Test authentication first
+      const authWorking = await testAuth();
+      if (!authWorking) {
+        console.error('Authentication failed, cannot fetch alumni');
+        return;
+      }
+      
       setLoading(true);
       const { data } = await axios.get(`${baseURL}api/alumni`, {
         withCredentials: true,
       });
+      console.log('fetchAlumni success:', data);
       setAlumni(data.alumni);
       setUser(data.role);
     } catch (err) {
       console.error("Error fetching alumni", err);
+      console.error("Error details:", err.response?.data);
     } finally {
       setLoading(false);
     }
@@ -32,26 +63,43 @@ const Mentor = () => {
 
   const fetchStudents = async () => {
     try {
+      console.log('fetchStudents called - user:', user);
       setLoading(true);
       const { data } = await axios.get(`${baseURL}api/student`, {
         withCredentials: true,
       });
+      console.log('fetchStudents success:', data);
       setUser(data.role);
       setStudents(data.students);
     } catch (err) {
       console.error("Error fetching students", err);
+      console.error("Error details:", err.response?.data);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    console.log('Mentor useEffect - user changed to:', user);
+    console.log('Mentor useEffect - currentUser:', currentUser);
+    
+    // Check if user is not authenticated
+    if (!currentUser && !user) {
+      console.log('User not authenticated, redirecting to login');
+      navigate('/login');
+      return;
+    }
+    
     if (user === 'student') {
+      console.log('Calling fetchAlumni because user is student');
       fetchAlumni();
     } else if (user === 'alumni') {
+      console.log('Calling fetchStudents because user is alumni');
       fetchStudents();
+    } else {
+      console.log('User is neither student nor alumni:', user);
     }
-  }, [user]);
+  }, [user, currentUser]);
 
   // Filter data based on search and skills
   const filteredData = (user === 'student' ? alumni : students).filter(item => {
