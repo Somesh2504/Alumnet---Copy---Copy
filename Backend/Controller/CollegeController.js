@@ -94,6 +94,7 @@ export const collegeLogin = async (req, res) => {
 
     res.status(200).json({
       message: 'College login successful',
+      token,
       college: {
         id: college._id,
         name: college.name,

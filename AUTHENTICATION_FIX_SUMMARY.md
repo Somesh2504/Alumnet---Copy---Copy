@@ -59,6 +59,23 @@ useEffect(() => {
 }, [user, authLoading]);
 ```
 
+### 4. **Fixed Backend College Login Response**
+- **File**: `Backend/Controller/CollegeController.js`
+- **Issue**: Token was not included in the JSON response for college login
+- **Fix**: Added the token to the JSON response:
+```javascript
+res.status(200).json({
+  message: 'College login successful',
+  token,
+  college: {
+    id: college._id,
+    name: college.name,
+    email: college.email,
+    approved: college.approved
+  }
+});
+```
+
 ## How It Works Now
 
 ### **Authentication Flow:**
