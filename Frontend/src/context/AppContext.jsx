@@ -41,12 +41,16 @@ export const AppContextProvider = ({ children }) => {
 
   const fetchCollegeUser = async () => {
     try {
+      // Check for college-specific token first, then fallback to generic token
+      const storedCollegeToken = localStorage.getItem('collegeToken');
       const storedToken = localStorage.getItem('token');
+      const token = storedCollegeToken || storedToken;
+      
       const headers = {};
       
       // Add Authorization header if token exists
-      if (storedToken) {
-        headers.Authorization = `Bearer ${storedToken}`;
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
       }
 
       const { data } = await axios.get(`${baseURL}api/college/dashboard`, {
@@ -108,36 +112,38 @@ export const AppContextProvider = ({ children }) => {
     
     // Check if token exists in localStorage
     const storedToken = localStorage.getItem('token');
+    const storedCollegeToken = localStorage.getItem('collegeToken');
     const storedAdminInfo = localStorage.getItem('adminInfo');
     
-          if (storedToken || storedAdminInfo) {
-        console.log('Token found in localStorage, attempting authentication');
+    if (storedToken || storedCollegeToken || storedAdminInfo) {
+      console.log('Token found in localStorage, attempting authentication');
+      
+      // Try to authenticate with stored token
+      const userSuccess = await fetchUser();
+      console.log('userSuccess:', userSuccess);
+      
+      if (!userSuccess) {
+        const collegeSuccess = await fetchCollegeUser();
+        console.log('collegeSuccess:', collegeSuccess);
         
-        // Try to authenticate with stored token
-        const userSuccess = await fetchUser();
-        console.log('userSuccess:', userSuccess);
-        
-        if (!userSuccess) {
-          const collegeSuccess = await fetchCollegeUser();
-          console.log('collegeSuccess:', collegeSuccess);
+        if (!collegeSuccess) {
+          const adminSuccess = await fetchAdminUser();
+          console.log('adminSuccess:', adminSuccess);
           
-          if (!collegeSuccess) {
-            const adminSuccess = await fetchAdminUser();
-            console.log('adminSuccess:', adminSuccess);
-            
-            if (!adminSuccess) {
-              // If all fail, clear localStorage and state
-              console.log('Authentication failed, clearing stored data');
-              localStorage.removeItem('token');
-              localStorage.removeItem('adminInfo');
-              setCurrentUser(null);
-              setUser(null);
-              setUserChat([]);
-              setAuthLoading(false);
-            }
+          if (!adminSuccess) {
+            // If all fail, clear localStorage and state
+            console.log('Authentication failed, clearing stored data');
+            localStorage.removeItem('token');
+            localStorage.removeItem('collegeToken');
+            localStorage.removeItem('adminInfo');
+            setCurrentUser(null);
+            setUser(null);
+            setUserChat([]);
+            setAuthLoading(false);
           }
         }
-      } else {
+      }
+    } else {
       // No stored token, try cookie-based authentication
       console.log('No stored token, trying cookie-based authentication');
       const userSuccess = await fetchUser();
@@ -226,8 +232,10 @@ export const AppContextProvider = ({ children }) => {
       setUserChat([]);
       setUnreadMessages({});
       setHasCheckedAuth(false); // Reset the flag on logout
-      // Clear token from localStorage
+      // Clear all tokens from localStorage
       localStorage.removeItem('token');
+      localStorage.removeItem('collegeToken');
+      localStorage.removeItem('adminInfo');
     }
   };
 

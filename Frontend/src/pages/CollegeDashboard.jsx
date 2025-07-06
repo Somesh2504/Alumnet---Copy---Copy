@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
 import axios from 'axios';
 import './CollegeDashboard.css';
@@ -8,7 +7,7 @@ import './CollegeDashboard.css';
 const CollegeDashboard = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { currentUser, setCurrentUser, logout, authLoading, baseURL } = useAppContext();
+  const { currentUser, logout, authLoading, baseURL } = useAppContext();
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -43,8 +42,19 @@ const CollegeDashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
+      // Get college token from localStorage
+      const storedCollegeToken = localStorage.getItem('collegeToken');
+      const storedToken = localStorage.getItem('token');
+      const token = storedCollegeToken || storedToken;
+      
+      const headers = {};
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
       const { data } = await axios.get(`${baseURL}api/college/dashboard`, {
-        withCredentials: true
+        withCredentials: true,
+        headers
       });
       setDashboardData(data);
     } catch (err) {
@@ -102,11 +112,8 @@ const CollegeDashboard = () => {
   return (
     <div className="college-dashboard">
       {/* Header */}
-      <motion.header 
+      <div 
         className="dashboard-header"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
       >
         <div className="header-content">
           <div className="college-info">
@@ -122,14 +129,11 @@ const CollegeDashboard = () => {
             </button>
           </div>
         </div>
-      </motion.header>
+      </div>
 
       {/* Navigation Tabs */}
-      <motion.nav 
+      <div 
         className="dashboard-nav"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
       >
         <button 
           className={`nav-tab ${activeTab === 'overview' ? 'active' : ''}`}
@@ -155,57 +159,45 @@ const CollegeDashboard = () => {
         >
           Add Records
         </button>
-      </motion.nav>
+      </div>
 
       {/* Main Content */}
       <main className="dashboard-content">
         {activeTab === 'overview' && (
-          <motion.div 
+          <div 
             className="overview-section"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
           >
             {/* Statistics Cards */}
             <div className="stats-grid">
-              <motion.div 
+              <div 
                 className="stat-card"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 }}
               >
                 <div className="stat-icon">👥</div>
                 <div className="stat-content">
                   <h3>{dashboardData?.stats?.totalStudents || 0}</h3>
                   <p>Total Students</p>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div 
+              <div 
                 className="stat-card"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4 }}
               >
                 <div className="stat-icon">🎓</div>
                 <div className="stat-content">
                   <h3>{dashboardData?.stats?.totalAlumni || 0}</h3>
                   <p>Total Alumni</p>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div 
+              <div 
                 className="stat-card"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 }}
               >
                 <div className="stat-icon">📊</div>
                 <div className="stat-content">
                   <h3>{(dashboardData?.stats?.totalStudents || 0) + (dashboardData?.stats?.totalAlumni || 0)}</h3>
                   <p>Total Records</p>
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* Recent Records */}
@@ -218,13 +210,10 @@ const CollegeDashboard = () => {
               </div>
 
               <div className="records-list">
-                {dashboardData?.recentRecords?.students?.map((student, index) => (
-                  <motion.div 
+                {dashboardData?.recentRecords?.students?.map((student) => (
+                  <div 
                     key={student._id}
                     className="record-item"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 * index }}
                   >
                     <div className="record-avatar">
                       {student.name.charAt(0).toUpperCase()}
@@ -237,44 +226,35 @@ const CollegeDashboard = () => {
                     <div className="record-date">
                       {new Date(student.createdAt).toLocaleDateString()}
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
 
         {activeTab === 'students' && (
-          <motion.div 
+          <div 
             className="students-section"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
           >
-            <StudentsManagement />
-          </motion.div>
+            <StudentsManagement baseURL={baseURL} />
+          </div>
         )}
 
         {activeTab === 'alumni' && (
-          <motion.div 
+          <div 
             className="alumni-section"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
           >
-            <AlumniManagement />
-          </motion.div>
+            <AlumniManagement baseURL={baseURL} />
+          </div>
         )}
 
         {activeTab === 'add' && (
-          <motion.div 
+          <div 
             className="add-records-section"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
           >
-            <AddRecords />
-          </motion.div>
+            <AddRecords baseURL={baseURL} />
+          </div>
         )}
       </main>
     </div>
@@ -282,7 +262,7 @@ const CollegeDashboard = () => {
 };
 
 // Students Management Component
-const StudentsManagement = () => {
+const StudentsManagement = ({ baseURL }) => {
   
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -345,7 +325,7 @@ const StudentsManagement = () => {
     setMessage('');
 
     try {
-      const { data } = await axios.post(`${baseURL}api/college/student-record`, formData, {
+      await axios.post(`${baseURL}api/college/student-record`, formData, {
         withCredentials: true
       });
 
@@ -407,11 +387,8 @@ const StudentsManagement = () => {
       </div>
 
       {showAddForm && (
-        <motion.div 
+        <div 
           className="add-form-container"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
         >
           <form onSubmit={handleAddStudent} className="add-record-form">
             <div className="form-row">
@@ -475,7 +452,7 @@ const StudentsManagement = () => {
               </button>
             </div>
           </form>
-        </motion.div>
+        </div>
       )}
 
       <div className="records-table">
@@ -522,7 +499,7 @@ const StudentsManagement = () => {
 };
 
 // Alumni Management Component
-const AlumniManagement = () => {
+const AlumniManagement = ({ baseURL }) => {
   const [alumni, setAlumni] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -584,7 +561,7 @@ const AlumniManagement = () => {
     setMessage('');
 
     try {
-      const { data } = await axios.post(`${baseURL}api/college/alumni-record`, formData, {
+      await axios.post(`${baseURL}api/college/alumni-record`, formData, {
         withCredentials: true
       });
 
@@ -646,11 +623,8 @@ const AlumniManagement = () => {
       </div>
 
       {showAddForm && (
-        <motion.div 
+        <div 
           className="add-form-container"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
         >
           <form onSubmit={handleAddAlumni} className="add-record-form">
             <div className="form-row">
@@ -717,7 +691,7 @@ const AlumniManagement = () => {
               </button>
             </div>
           </form>
-        </motion.div>
+        </div>
       )}
 
       <div className="records-table">
@@ -764,7 +738,7 @@ const AlumniManagement = () => {
 };
 
 // Add Records Component
-const AddRecords = () => {
+const AddRecords = ({ baseURL }) => {
   const [recordType, setRecordType] = useState('student');
   const [formData, setFormData] = useState({
     name: '',
@@ -790,7 +764,7 @@ const AddRecords = () => {
         ...(recordType === 'student' ? { year: formData.year } : { passoutyear: formData.passoutyear })
       };
 
-      const { data } = await axios.post(endpoint, payload, {
+      await axios.post(endpoint, payload, {
         withCredentials: true
       });
 

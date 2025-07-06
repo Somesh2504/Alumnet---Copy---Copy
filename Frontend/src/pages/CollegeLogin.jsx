@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
 import axios from 'axios';
@@ -39,8 +40,10 @@ const CollegeLogin = () => {
       
       console.log('College login successful:', response.data);
       
-      // Store token in localStorage if provided
+      // Store token in localStorage for college authentication
       if (response.data.token) {
+        localStorage.setItem('collegeToken', response.data.token);
+        // Also store as generic token for compatibility
         localStorage.setItem('token', response.data.token);
       }
       
