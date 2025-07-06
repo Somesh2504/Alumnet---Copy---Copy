@@ -13,15 +13,48 @@ cloudinary.config({
 
 export const fetchUser = async (req, res) => {
   try {
-    const student = await Student.findById(req.user.id);
-    const alumni = await Alumni.findById(req.user.id);
-
-    let user = null; // Define once outside
-    if (student != null) {
-      user = student;
+    console.log("fetchUser called with user:", req.user);
+    
+    let user = null;
+    
+    // Check if user has a role in the token
+    if (req.user.role) {
+      // If role is specified, fetch from the appropriate collection
+      if (req.user.role === 'alumni') {
+        user = await Alumni.findById(req.user.id);
+      } else if (req.user.role === 'student') {
+        user = await Student.findById(req.user.id);
+      }
     } else {
-      user = alumni;
+      // Fallback: try both collections and determine based on which one has data
+      const student = await Student.findById(req.user.id);
+      const alumni = await Alumni.findById(req.user.id);
+      
+      if (student && alumni) {
+        // If both exist, prefer the one with more complete data
+        user = alumni;
+        console.log("Both student and alumni found, using alumni data");
+      } else if (student) {
+        user = student;
+        console.log("Student found");
+      } else if (alumni) {
+        user = alumni;
+        console.log("Alumni found");
+      }
     }
+    
+    if (!user) {
+      console.log("No user found in database");
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    console.log("Returning user data:", {
+      id: user._id,
+      name: user.name,
+      role: user.role,
+      email: user.email
+    });
+    
     return res.status(200).json({ message: "get successful", user: user });
   } catch (error) {
     console.log("server error in user fetching ", error);

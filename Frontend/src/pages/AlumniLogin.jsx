@@ -73,7 +73,7 @@ function AlumniLogin() {
       }
       
       setCurrentUser(response.data)
-      navigate('/alumni/dashboard');
+      navigate('/');
       setUser('alumni')
       
     } catch (error) {

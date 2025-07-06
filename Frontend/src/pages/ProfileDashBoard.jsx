@@ -24,6 +24,10 @@ const ProfileDashBoard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
 
+  // Debug logging
+  console.log('ProfileDashBoard - currentUser:', currentUser);
+  console.log('ProfileDashBoard - authLoading:', authLoading);
+
   if (authLoading) {
     return (
       <div className="profile-dashboard-loading">
@@ -46,6 +50,14 @@ const ProfileDashBoard = () => {
   const isAlumni = currentUser.role === 'alumni';
   const isStudent = currentUser.role === 'student';
   const isCollege = currentUser.role === 'college';
+
+  // Debug logging for user type
+  console.log('ProfileDashBoard - User type:', {
+    isAlumni,
+    isStudent,
+    isCollege,
+    role: currentUser.role
+  });
 
   // Common fields
   const profilePic = currentUser.profilePic || '';
@@ -87,6 +99,23 @@ const ProfileDashBoard = () => {
   const projects = currentUser.projects || [];
   const certifications = currentUser.certifications || currentUser.achievements || [];
   const socials = currentUser.socials || {};
+
+  // Debug logging for alumni-specific fields
+  if (isAlumni) {
+    console.log('ProfileDashBoard - Alumni fields:', {
+      branch,
+      graduationYear,
+      careerPath,
+      mentorshipBio,
+      mentorshipTags,
+      availableForMentorship,
+      maxStudents,
+      skills,
+      projects,
+      certifications,
+      socials
+    });
+  }
 
   // Responsive sidebar toggle
   const handleSidebarToggle = () => setSidebarOpen((open) => !open);

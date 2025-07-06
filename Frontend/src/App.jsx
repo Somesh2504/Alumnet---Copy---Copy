@@ -28,7 +28,6 @@ import AdminStudents from "./pages/AdminStudents";
 import AdminAlumni from "./pages/AdminAlumni";
 import AdminTestimonials from "./pages/AdminTestimonials";
 import CollegeDashboard from "./pages/CollegeDashboard";
-import AlumniDashboard from "./pages/AlumniDashboard";
 import ProfileDashBoard from "./pages/ProfileDashBoard";
 import AlumniDetail from "./pages/AlumniDetail";
 import Community from "./pages/Community";
@@ -90,7 +89,6 @@ const App = () => {
         <Route path="/register/student" element={<StudentRegister />} />
         <Route path="/register/college" element={<CollegeRegister />} />
         <Route path="/college/dashboard" element={<CollegeDashboard />} />
-        <Route path="/alumni/dashboard" element={<AlumniDashboard />} />
         <Route path="/community" element={<Community/>} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
