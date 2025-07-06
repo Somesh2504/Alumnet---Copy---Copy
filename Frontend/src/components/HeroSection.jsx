@@ -1,8 +1,8 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import './HeroSection.css';
-import Hero3DIcon from './Hero3DIcon';
 
 const HeroSection = () => {
   const { user } = useAppContext();
@@ -59,6 +59,17 @@ const HeroSection = () => {
     }
   };
 
+  const floatingVariants = {
+    animate: {
+      y: [-10, 10, -10],
+      transition: {
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   // Button click handlers
   const handleFindMentor = () => {
     if (user === null) {
@@ -95,21 +106,21 @@ const HeroSection = () => {
         <div className="bg-grid"></div>
       </div>
 
-      <div 
+      <motion.div 
         className="hero-content"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         {/* Badge */}
-        <div 
+        <motion.div 
           className="hero-badge"
           variants={itemVariants}
         >
           <span>🚀 Join the Future of Mentorship</span>
-        </div>
+        </motion.div>
 
-        <h1 variants={itemVariants} className="hero-title">
+        <motion.h1 variants={itemVariants} className="hero-title">
           Unlock Your Potential with{' '}
           <span className="highlight">
             <div className="highlight-border"></div>
@@ -123,18 +134,18 @@ const HeroSection = () => {
               <div className="particle"></div>
             </div>
           </span>
-        </h1>
+        </motion.h1>
         
-        <p variants={itemVariants} className="hero-subtitle">
+        <motion.p variants={itemVariants} className="hero-subtitle">
           A revolutionary mentorship ecosystem connecting ambitious students with experienced alumni. 
           Transform your career path through personalized guidance, structured learning, and powerful networking.
-        </p>
+        </motion.p>
         
-        <div variants={itemVariants} className="hero-buttons">
+        <motion.div variants={itemVariants} className="hero-buttons">
           {/* Show both buttons when not logged in */}
           {shouldShowBothButtons && (
             <>
-              <button 
+              <motion.button 
                 className="primary-button"
                 onClick={handleFindMentor}
                 whileHover={{ 
@@ -152,9 +163,9 @@ const HeroSection = () => {
                 </div>
                 <span>Find a Mentor</span>
                 <span className="button-icon">→</span>
-              </button>
+              </motion.button>
               
-              <button 
+              <motion.button 
                 className="secondary-button"
                 onClick={handleBecomeMentor}
                 whileHover={{ 
@@ -172,13 +183,13 @@ const HeroSection = () => {
                 </div>
                 <span>Become a Mentor</span>
                 <span className="button-icon">✨</span>
-              </button>
+              </motion.button>
             </>
           )}
 
           {/* Show only Find a Mentor button for students */}
           {shouldShowFindMentor && (
-            <button 
+            <motion.button 
               className="primary-button"
               onClick={handleFindMentor}
               whileHover={{ 
@@ -196,12 +207,12 @@ const HeroSection = () => {
               </div>
               <span>Find a Mentor</span>
               <span className="button-icon">→</span>
-            </button>
+            </motion.button>
           )}
 
           {/* Show only Become a Mentor button for alumni */}
           {shouldShowBecomeMentor && (
-            <button 
+            <motion.button 
               className="primary-button"
               onClick={handleBecomeMentor}
               whileHover={{ 
@@ -219,12 +230,12 @@ const HeroSection = () => {
               </div>
               <span>Become a Mentor</span>
               <span className="button-icon">✨</span>
-            </button>
+            </motion.button>
           )}
-        </div>
+        </motion.div>
         
-        <div variants={itemVariants} className="hero-stats">
-          <div 
+        <motion.div variants={itemVariants} className="hero-stats">
+          <motion.div 
             className="stat-item"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
@@ -232,8 +243,8 @@ const HeroSection = () => {
             <h3>1200+</h3>
             <p>Active Mentors</p>
             <div className="stat-glow"></div>
-          </div>
-          <div 
+          </motion.div>
+          <motion.div 
             className="stat-item"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
@@ -241,8 +252,8 @@ const HeroSection = () => {
             <h3>5000+</h3>
             <p>Student Matches</p>
             <div className="stat-glow"></div>
-          </div>
-          <div 
+          </motion.div>
+          <motion.div 
             className="stat-item"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
@@ -250,11 +261,11 @@ const HeroSection = () => {
             <h3>95%</h3>
             <p>Success Rate</p>
             <div className="stat-glow"></div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Trust Indicators */}
-        <div 
+        <motion.div 
           className="trust-indicators"
           variants={itemVariants}
         >
@@ -264,10 +275,10 @@ const HeroSection = () => {
             <div className="trust-logo">🎓</div>
             <div className="trust-logo">⚡</div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       
-      <div 
+      <motion.div 
         className="hero-visual"
         variants={imageVariants}
         initial="hidden"
@@ -276,7 +287,7 @@ const HeroSection = () => {
         <div className="hero-image-container">
           <div className="hero-image-placeholder">
             <div className="placeholder-content">
-              <Hero3DIcon />
+              <div className="placeholder-icon">🎯</div>
               <div className="placeholder-text">Mentorship in Action</div>
             </div>
           </div>
@@ -293,7 +304,7 @@ const HeroSection = () => {
             <p>Expert Guidance</p>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
