@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Nav from "./components/Nav";
 import Login from "./pages/Login";
@@ -29,10 +29,11 @@ import AdminAlumni from "./pages/AdminAlumni";
 import AdminTestimonials from "./pages/AdminTestimonials";
 import CollegeDashboard from "./pages/CollegeDashboard";
 import ProfileDashBoard from "./pages/ProfileDashBoard";
+import StudentProfile from "./pages/StudentProfile";
+import AlumniProfile from "./pages/AlumniProfile";
 import AlumniDetail from "./pages/AlumniDetail";
 import Community from "./pages/Community";
 import StudentDetail from './pages/StudentDetail';
-
 
 
 const CallWrapper = ({ currentUser }) => {
@@ -60,6 +61,33 @@ function ScrollToTop() {
   }, [pathname]);
   return null;
 }
+
+// Profile Router Component
+const ProfileRouter = () => {
+  const { currentUser, authLoading } = useAppContext();
+  
+  if (authLoading) {
+    return <div>Loading...</div>;
+  }
+  
+  if (!currentUser) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  // Redirect based on user role
+  switch (currentUser.role) {
+    case 'student':
+      return <Navigate to="/profile/student" replace />;
+    case 'alumni':
+      return <Navigate to="/profile/alumni" replace />;
+    case 'college':
+      return <Navigate to="/college/dashboard" replace />;
+    case 'admin':
+      return <Navigate to="/admin/dashboard" replace />;
+    default:
+      return <Navigate to="/login" replace />;
+  }
+};
 
 const App = () => {
   const { currentUser } = useAppContext();
@@ -96,7 +124,10 @@ const App = () => {
         <Route path="/chat" element={<ChaPage/>} />
         <Route path="/chat/:id" element={<ChatWrapper currentUser={currentUser} />} />
         <Route path="/call/:id" element={<CallWrapper currentUser={currentUser} />} />
-       <Route path="/profile" element={<ProfileDashBoard/>}/>
+        <Route path="/profile" element={<ProfileRouter />} />
+        <Route path="/profile/student" element={<StudentProfile />} />
+        <Route path="/profile/alumni" element={<AlumniProfile />} />
+        <Route path="/profile/dashboard" element={<ProfileDashBoard/>} />
       </Routes>
       <Footer/>
     </>
