@@ -1,10 +1,11 @@
 import express from 'express'
-import { getAlumni, loginAlumni, registerAlumni, sendVerificationOTP, verifyOTPAndRegister, getAlumniById, logoutAlumni } from '../Controller/AlumniController.js'
+import { getAlumni, loginAlumni, registerAlumni, sendVerificationOTP, verifyOTPAndRegister, getAlumniById, logoutAlumni, getAlumniDashboard } from '../Controller/AlumniController.js'
 import authUser from '../middlewares/authUser.js'
 import { upload } from '../config/storage.js'
 const alumniRouter = express.Router()
 
 alumniRouter.get('/',authUser,getAlumni)
+alumniRouter.get('/dashboard', authUser, getAlumniDashboard)
 alumniRouter.get('/:id', getAlumniById)
 
 // New secure registration flow with OTP

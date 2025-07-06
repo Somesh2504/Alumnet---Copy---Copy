@@ -68,6 +68,8 @@ function Nav() {
       navigate('/admin/dashboard');
     } else if (isCollege) {
       navigate('/college/dashboard');
+    } else if (user === 'alumni') {
+      navigate('/alumni/dashboard');
     } else {
       navigate('/profile');
     }
@@ -160,6 +162,11 @@ function Nav() {
               <ScrollLink to="/alumnies" className="menu-item">{user=='alumni'?'Students':'Alumnies'}</ScrollLink>
               <ScrollLink to="/chat" className="menu-item">Chat</ScrollLink>
               <ScrollLink to="/community" className="menu-item">Community</ScrollLink>
+            </>
+          )}
+          {user === 'alumni' && (
+            <>
+              <ScrollLink to="/alumni/dashboard" className="menu-item">Dashboard</ScrollLink>
             </>
           )}
           {isAdmin && (
