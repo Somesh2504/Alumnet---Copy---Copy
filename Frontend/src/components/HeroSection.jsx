@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import SplineAnimation from './SplineAnimation';
 import './HeroSection.css';
 
 const HeroSection = () => {
@@ -278,7 +277,7 @@ const HeroSection = () => {
           <div className="hero-image-placeholder">
             <div className="placeholder-content">
               <div className="placeholder-icon">
-                <SplineAnimation />
+                <div className="mentorship-icon">🤝</div>
               </div>
               <div className="placeholder-text">Mentorship in Action</div>
             </div>
