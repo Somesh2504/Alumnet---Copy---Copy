@@ -92,22 +92,6 @@ const Chat = ({ loggedInUserId }) => {
 
   const responsiveSizes = getResponsiveSizes();
 
-  // Scroll to bottom function
-  const scrollToBottom = () => {
-    const messagesWrapper = messagesEndRef.current?.closest('.chat-messages-wrapper');
-    if (messagesWrapper) {
-      // Check if user is already near the bottom (within 100px)
-      const isNearBottom = messagesWrapper.scrollHeight - messagesWrapper.scrollTop - messagesWrapper.clientHeight < 100;
-      
-      // Only auto-scroll if user is near the bottom or if it's a new message
-      if (isNearBottom) {
-        requestAnimationFrame(() => {
-          messagesWrapper.scrollTop = messagesWrapper.scrollHeight;
-        });
-      }
-    }
-  };
-
   // Fetch receiver information
   useEffect(() => {
     const fetchReceiverInfo = async () => {
@@ -253,9 +237,6 @@ const Chat = ({ loggedInUserId }) => {
           fileData
         }]);
         
-        // Scroll to bottom when receiving message
-        setTimeout(scrollToBottom, 100);
-        
         // Mark as read if user is in the conversation
         markMessagesAsRead();
       }
@@ -303,19 +284,12 @@ const Chat = ({ loggedInUserId }) => {
     };
   }, [loggedInUserId, receiverId]);
 
-  // Auto-scroll to bottom on initial load
+  // Auto-scroll to bottom
   useEffect(() => {
-    if (!isInitialLoad && messagesEndRef.current) {
-      // Get the messages wrapper element
-      const messagesWrapper = messagesEndRef.current.closest('.chat-messages-wrapper');
-      if (messagesWrapper) {
-        // Use requestAnimationFrame for smooth scrolling
-        requestAnimationFrame(() => {
-          messagesWrapper.scrollTop = messagesWrapper.scrollHeight;
-        });
-      }
+    if (!isInitialLoad) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [isInitialLoad]);
+  }, [messages, isInitialLoad]);
 
   // Typing indicator
   useEffect(() => {
@@ -362,9 +336,6 @@ const Chat = ({ loggedInUserId }) => {
 
     setMessages(prev => [...prev, messageData]);
     setInputMessage('');
-    
-    // Scroll to bottom after sending message
-    setTimeout(scrollToBottom, 100);
     
     // Update message status to sent after a delay
     setTimeout(() => {
