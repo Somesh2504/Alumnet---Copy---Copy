@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
+import SplineAnimation from './SplineAnimation';
 import './HeroSection.css';
 
 const HeroSection = () => {
@@ -55,17 +56,6 @@ const HeroSection = () => {
         delay: 0.4,
         type: "spring",
         stiffness: 80
-      }
-    }
-  };
-
-  const floatingVariants = {
-    animate: {
-      y: [-10, 10, -10],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut"
       }
     }
   };
@@ -287,7 +277,9 @@ const HeroSection = () => {
         <div className="hero-image-container">
           <div className="hero-image-placeholder">
             <div className="placeholder-content">
-              <div className="placeholder-icon">🎯</div>
+              <div className="placeholder-icon">
+                <SplineAnimation />
+              </div>
               <div className="placeholder-text">Mentorship in Action</div>
             </div>
           </div>
