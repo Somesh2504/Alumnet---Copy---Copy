@@ -772,35 +772,6 @@
   margin-bottom: 1rem;
 }
 
-.mentorship-icon {
-  font-size: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(79, 191, 139, 0.1) 100%);
-  border-radius: 50%;
-  border: 2px solid rgba(102, 126, 234, 0.2);
-  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
-  animation: mentorshipIconFloat 3s ease-in-out infinite;
-  transition: all 0.3s ease;
-}
-
-.mentorship-icon:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.25);
-}
-
-@keyframes mentorshipIconFloat {
-  0%, 100% { 
-    transform: translateY(0px) rotate(0deg); 
-  }
-  50% { 
-    transform: translateY(-10px) rotate(5deg); 
-  }
-}
-
 .placeholder-text {
   font-size: 1.2rem;
   font-weight: 600;

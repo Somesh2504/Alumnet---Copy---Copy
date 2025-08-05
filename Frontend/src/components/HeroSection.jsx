@@ -276,9 +276,7 @@ const HeroSection = () => {
         <div className="hero-image-container">
           <div className="hero-image-placeholder">
             <div className="placeholder-content">
-              <div className="placeholder-icon">
-                <div className="mentorship-icon">🤝</div>
-              </div>
+              <div className="placeholder-icon">🎯</div>
               <div className="placeholder-text">Mentorship in Action</div>
             </div>
           </div>
