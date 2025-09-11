@@ -3,6 +3,7 @@ import Peer from 'peerjs';
 import axios from 'axios';
 import socket from '../socket';
 import { useAppContext } from '../context/AppContext';
+import { IoCall } from 'react-icons/io5';
 import './Call.css';
 
 // Simple ringtone using WebAudio API (looping tone pairs)
@@ -226,7 +227,9 @@ const Call = ({ user, receiverId }) => {
         </div>
 
         <div className="call-controls">
-          <button className="end-call-btn" onClick={handleEndCall} aria-label="End call">✕</button>
+          <button className="end-call-btn" onClick={handleEndCall} aria-label="End call">
+            <IoCall className="cut-icon" />
+          </button>
         </div>
 
         {/* Hidden local media; remote audio only */}
