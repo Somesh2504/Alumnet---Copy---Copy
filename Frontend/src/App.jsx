@@ -11,6 +11,7 @@ import CollegeLogin from "./pages/CollegeLogin";
 import { useParams } from 'react-router-dom';
 import Chat from './pages/Chat';
 import Call from './pages/Call';
+import VideoCall from './pages/VideoCall';
 import Mentor from "./pages/Mentor";
 import Footer from "./components/Footer";
 import ChaPage from "./pages/ChaPage";
@@ -34,6 +35,15 @@ import AlumniProfile from "./pages/AlumniProfile";
 import AlumniDetail from "./pages/AlumniDetail";
 import Community from "./pages/Community";
 import StudentDetail from './pages/StudentDetail';
+
+
+const VideoCallWrapper = ({ currentUser }) => {
+  const { id } = useParams();
+  if (!currentUser) {
+    return <div>Loading...</div>; // or redirect to login
+  }
+  return <VideoCall user={currentUser} receiverId={id} />;
+};
 
 
 const CallWrapper = ({ currentUser }) => {
@@ -124,6 +134,7 @@ const App = () => {
         <Route path="/chat" element={<ChaPage/>} />
         <Route path="/chat/:id" element={<ChatWrapper currentUser={currentUser} />} />
         <Route path="/call/:id" element={<CallWrapper currentUser={currentUser} />} />
+        <Route path="/video-call/:id" element={<VideoCallWrapper currentUser={currentUser} />} />
         <Route path="/profile" element={<ProfileRouter />} />
         <Route path="/profile/student" element={<StudentProfile />} />
         <Route path="/profile/alumni" element={<AlumniProfile />} />

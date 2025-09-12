@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import socket from '../socket';
 import axios from 'axios';
 import { 
@@ -48,6 +48,7 @@ const Chat = ({ loggedInUserId }) => {
   const imageInputRef = useRef(null);
   const documentInputRef = useRef(null);
   const { id: receiverId } = useParams();
+  const navigate = useNavigate();
   const { showError, showSuccess } = useNotification();
   const { baseURL } = useAppContext();
 
@@ -552,9 +553,12 @@ const Chat = ({ loggedInUserId }) => {
           <button 
             className="chat-action-btn"
             onClick={() => {
-              // Phone call functionality
-              showSuccess('Call feature coming soon!');
-              console.log('Phone button clicked, IoCall component:', IoCall);
+              // Navigate to voice call
+              if (receiverId) {
+                navigate(`/call/${receiverId}`);
+              } else {
+                showError('Unable to start call - user not found');
+              }
             }}
             title="Call"
             aria-label="Call user"
@@ -579,9 +583,12 @@ const Chat = ({ loggedInUserId }) => {
           <button 
             className="chat-action-btn"
             onClick={() => {
-              // Video call functionality
-              showSuccess('Video call feature coming soon!');
-              console.log('Video button clicked, IoVideocam component:', IoVideocam);
+              // Navigate to video call
+              if (receiverId) {
+                navigate(`/video-call/${receiverId}`);
+              } else {
+                showError('Unable to start video call - user not found');
+              }
             }}
             title="Video Call"
             aria-label="Video call user"
