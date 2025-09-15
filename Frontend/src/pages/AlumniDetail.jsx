@@ -45,8 +45,15 @@ const AlumniDetail = () => {
   };
 
   const handleContactClick = (type) => {
-    // Handle contact actions
-    console.log(`Contact via ${type}`);
+    if (!id) return;
+    if (type === 'chat') {
+      navigate(`/chat/${id}`);
+      return;
+    }
+    if (type === 'call') {
+      navigate(`/call/${id}`);
+      return;
+    }
   };
 
   if (loading) {

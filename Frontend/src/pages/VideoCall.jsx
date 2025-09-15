@@ -3,6 +3,7 @@ import Peer from 'peerjs';
 import axios from 'axios';
 import socket from '../socket';
 import { useAppContext } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 import { IoCall } from 'react-icons/io5';
 import './VideoCall.css';
 
@@ -50,6 +51,7 @@ const createRingtone = () => {
 
 const VideoCall = ({ user, receiverId }) => {
   const { baseURL } = useAppContext();
+  const navigate = useNavigate();
   const [peerId, setPeerId] = useState('');
   const [callState, setCallState] = useState('ringing'); // ringing | connected | ended
   const [receiverInfo, setReceiverInfo] = useState(null);
@@ -221,6 +223,9 @@ const VideoCall = ({ user, receiverId }) => {
     }
     cleanupMedia();
     setCallState('ended');
+    setTimeout(() => {
+      navigate(-1);
+    }, 50);
   };
 
   const statusText = callState === 'ringing' ? 'Ringing…' : callState === 'connected' ? 'Connected' : 'Call ended';
