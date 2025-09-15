@@ -285,10 +285,14 @@ const Chat = ({ loggedInUserId }) => {
     };
   }, [loggedInUserId, receiverId]);
 
-  // Auto-scroll to bottom
+  // Auto-scroll to bottom only when receiving messages (not when sending)
   useEffect(() => {
-    if (!isInitialLoad) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (!isInitialLoad && messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      // Only auto-scroll if the last message is from the other user (received message)
+      if (lastMessage.from === 'other') {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }, [messages, isInitialLoad]);
 
