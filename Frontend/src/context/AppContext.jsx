@@ -10,7 +10,7 @@ export const AppContextProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(true);
   const [hasCheckedAuth, setHasCheckedAuth] = useState(false);
   const [unreadMessages, setUnreadMessages] = useState({});
-  const baseURL = "https://alumnet-backend-fndz.onrender.com/";
+  const baseURL = "https://alumnet-backend-fndz.onrender.com";
   const fetchUser = async () => {
     try {
       const storedToken = localStorage.getItem('token');
