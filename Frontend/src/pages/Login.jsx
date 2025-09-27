@@ -27,6 +27,9 @@ function Login() {
     } else if (selectedType === 'college') {
       navigate('college');
     }
+    else if (selectedType === 'Admin') {
+      navigate('admin');
+    }
   };
 
   return (
@@ -71,6 +74,18 @@ function Login() {
             <div className="option-label">
               <h3>College</h3>
               <p>Educational institution administrator</p>
+            </div>
+          </div>
+          <div 
+            className={`option-card ${selectedType === 'college' ? 'selected' : ''}`}
+            onClick={() => handleTypeSelection('college')}
+          >
+            <div className="radio-circle">
+              {selectedType === 'Admin' && <div className="radio-inner-circle"></div>}
+            </div>
+            <div className="option-label">
+              <h3>Super Admin</h3>
+              <p>College administrator</p>
             </div>
           </div>
         </div>
