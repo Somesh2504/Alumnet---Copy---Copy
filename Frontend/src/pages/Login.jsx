@@ -77,8 +77,8 @@ function Login() {
             </div>
           </div>
           <div 
-            className={`option-card ${selectedType === 'college' ? 'selected' : ''}`}
-            onClick={() => handleTypeSelection('college')}
+            className={`option-card ${selectedType === 'Admin' ? 'selected' : ''}`}
+            onClick={() => handleTypeSelection('Admin')}
           >
             <div className="radio-circle">
               {selectedType === 'Admin' && <div className="radio-inner-circle"></div>}
