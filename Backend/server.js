@@ -70,6 +70,10 @@ if (process.env.NODE_ENV === "production") {
     legacyHeaders: false,
   }));
 }
+app.get('*', (req, res) => {
+   res.sendFile(path.resolve('https://alumnet-frontend-c0cg.onrender.com', 'index.html'));
+
+})
 
 // Instead, just connect to database and export app
 connectDB();
