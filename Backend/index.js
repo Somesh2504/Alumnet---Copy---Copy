@@ -302,7 +302,10 @@ io.on('connection', (socket) => {
     }
   });
 });
+app.get('*', (req, res) => {
+   res.sendFile(path.resolve('https://alumnet-frontend-c0cg.onrender.com', 'index.html'));
 
+})
 // Start the combined server
 server.listen(PORT, () => {
   connectDB();
